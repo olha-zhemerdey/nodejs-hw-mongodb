@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { env } from '../utils/env.js';
 
-
 export const initMongoConnection = async () => {
   try {
     const user = env('MONGODB_USER');
@@ -10,10 +9,8 @@ export const initMongoConnection = async () => {
     const db = env('MONGODB_DB');
 
     await mongoose.connect(
-      `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority&appName=Cluster01`,
+      `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
     );
-
-    // mongodb+srv://oyashnaya88:<db_password>@cluster0.xhjrb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
     console.log(`Mongo connection successfully established!`);
   } catch (error) {
