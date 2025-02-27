@@ -4,9 +4,7 @@ import pino from 'pino-http';
 import { env } from './utils/env.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
 
-
-
-const PORT = process.env.PORT || 3000;
+const PORT = Number(env('PORT', 3000));
 
 export function setupServer() {
   const app = express();
@@ -24,11 +22,11 @@ export function setupServer() {
   );
 
   app.get('/contacts', async (req, res) => {
-    const contacts = await getAllContacts();
+    const data = await getAllContacts();
     res.status(200).json({
       status: 200,
       message: 'Successfully found contacts!',
-      data: contacts,
+      data: data,
     });
   });
 
@@ -46,7 +44,6 @@ export function setupServer() {
         .json({
           status: 404,
           message: 'Contact not found',
-          error: `The requested contact with id ${contactId} was not found`,
         });
       return;
     }
@@ -62,15 +59,6 @@ export function setupServer() {
     res.status(404).json({
       status: 404,
       message: `Route ${url} Not found`,
-      error: `The requested resource ${req.url} was not found`,
-    });
-  });
-
-  app.use((error, req, res, next) => {
-    res.status(500).json({
-      status: 500,
-      message: 'Something went wrong',
-      error: error.message,
     });
   });
 
