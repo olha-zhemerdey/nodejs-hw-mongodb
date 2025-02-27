@@ -8,11 +8,8 @@ const PORT = Number(env('PORT', 3000));
 
 export function setupServer() {
   const app = express();
-
   app.use(express.json());
-
   app.use(cors());
-
   app.use(
     pino({
       transport: {
@@ -29,11 +26,6 @@ export function setupServer() {
       data: data,
     });
   });
-
-  // app.get('/', (req, res) => {
-  //   res.send('Hello, world!');
-  // });
-
   app.get('/contacts/:contactId', async (req, res, next) => {
     const { contactId } = req.params;
     const contact = await getContactById(contactId);
