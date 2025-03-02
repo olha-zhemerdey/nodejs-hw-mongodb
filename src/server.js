@@ -3,7 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 import { env } from './utils/env.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
-
+import contactsRouter from './routers/students.js';
 const PORT = Number(env('PORT', 3000));
 
 export function setupServer() {
@@ -46,11 +46,20 @@ export function setupServer() {
     });
   });
 
+  app.use(contactsRouter);
+
   app.use((req, res, next) => {
     const url = req.url;
     res.status(404).json({
       status: 404,
       message: `Route ${url} Not found`,
+    });
+  });
+
+  app.use((err, req, res, next) => {
+    res.status(500).json({
+      message: 'Something went wrong',
+      error: err.message,
     });
   });
 
