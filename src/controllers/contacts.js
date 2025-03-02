@@ -6,7 +6,7 @@ import {
   createContact,
   deleteContact,
   updateContact,
-} from './services/contacts.js';
+} from '../services/contacts.js';
 
 export const getContactsController = async (req, res, next) => {
   const contacts = await getAllContacts();
