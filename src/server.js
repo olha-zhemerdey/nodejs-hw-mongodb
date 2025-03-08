@@ -8,7 +8,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 const PORT = Number(env('PORT', 3000));
 
-export function setupServer() {
+export const setupServer = () => {
   const app = express();
   app.use(express.json());
   app.use(cors());
@@ -20,7 +20,7 @@ export function setupServer() {
     }),
   );
 
-  app.use(contactsRouter);
+  app.use('/contacts', contactsRouter);
   app.use('*', notFoundHandler);
   app.use(errorHandler);
 
