@@ -37,7 +37,8 @@ export const authenticate = async (req, res, next) => {
   const user = await UsersCollection.findById(session.userId);
 
   if (!user) {
-    throw createHttpError(401, 'Unauthorized: User not authenticated');
+    next(createHttpError(401));
+    return;
   }
 
   req.user = user;

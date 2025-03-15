@@ -10,10 +10,10 @@ const parseSortBy = (sortBy) => {
   const keysOfStudent = [
     '_id',
     'name',
-    'age',
-    'gender',
-    'avgMark',
-    'onDuty',
+    'phoneNumber',
+    'email',
+    'isFavourite',
+    'contactType',
     'createdAt',
     'updatedAt',
   ];
