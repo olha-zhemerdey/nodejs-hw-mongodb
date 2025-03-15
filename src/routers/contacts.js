@@ -4,7 +4,6 @@ import {
   getContactsController,
   createContactController,
   patchContactController,
-  upsertContactController,
   deleteContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -46,7 +45,7 @@ contactsRouter.put(
   '/:contactId',
   isValidId,
   validateBody(createContactSchema),
-  ctrlWrapper(upsertContactController),
+  ctrlWrapper(createContactController),
 );
 
 contactsRouter.delete(

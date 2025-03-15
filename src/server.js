@@ -12,16 +12,16 @@ const PORT = Number(env('PORT', 3000));
 export const setupServer = () => {
   const app = express();
 
-  const logger = pino({
-    transport: {
-      target: 'pino-pretty',
-    },
-  });
-
   app.use(express.json());
   app.use(cors());
   app.use(cookieParser());
-  app.use(logger);
+  app.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
 
   app.use(router);
   app.use('*', notFoundHandler);

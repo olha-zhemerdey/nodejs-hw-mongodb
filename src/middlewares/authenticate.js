@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
+import { UsersCollection } from '../db/models/user.js';
+import { SessionsCollection } from '../db/models/session.js';
 
-import { SessionCollection } from '../db/models/session.js';
-import { UserCollection } from '../db/models/user.js';
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization');
@@ -19,7 +19,7 @@ export const authenticate = async (req, res, next) => {
     return;
   }
 
-  const session = await SessionCollection.findOne({ accessToken: token });
+  const session = await SessionsCollection.findOne({ accessToken: token });
 
   if (!session) {
     next(createHttpError(401, 'Session not found'));
@@ -31,13 +31,13 @@ export const authenticate = async (req, res, next) => {
 
   if (isAccessTokenExpired) {
     next(createHttpError(401, 'Access token expired'));
+    return;
   }
 
-  const user = await UserCollection.findById(session.userId);
+  const user = await UsersCollection.findById(session.userId);
 
   if (!user) {
-    next(createHttpError(401));
-    return;
+    throw createHttpError(401, 'Unauthorized: User not authenticated');
   }
 
   req.user = user;
