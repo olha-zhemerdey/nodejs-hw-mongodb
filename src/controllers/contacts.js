@@ -17,6 +17,8 @@ export const getContactsController = async (req, res) => {
 
   const filter = parseFilterParams(req.query);
 
+  const { _id: userId } = req.user;
+
   const contacts = await getAllContacts({
     page,
     perPage,
@@ -35,6 +37,7 @@ export const getContactsController = async (req, res) => {
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
   const { _id: userId } = req.user;
+
   const contact = await getContactById(contactId, userId);
 
   if (contact) {
@@ -51,7 +54,7 @@ export const getContactByIdController = async (req, res) => {
 export const createContactController = async (req, res) => {
   const { _id: userId } = req.user;
 
-  const contact = await createContact(...req.body, userId);
+  const contact = await createContact({...req.body, userId});
 
   res.status(201).json({
     status: 201,
