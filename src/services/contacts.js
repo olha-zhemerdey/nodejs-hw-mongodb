@@ -3,14 +3,13 @@ import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/models/Contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-
 export const getAllContacts = async ({
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
-  userId
+  userId,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
