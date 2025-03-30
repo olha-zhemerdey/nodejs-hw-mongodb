@@ -1,0 +1,14 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logout
+description: 'Logout user from the app'
+security: []
+responses:
+  '204':
+    description: 'Successfully logged out the user'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+    description: 'User is not authenticated'
+  '500':
+    $ref: '../../components/responses/500.yaml'
